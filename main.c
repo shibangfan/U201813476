@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-/*void main()
+void main()
 {
     int a[100];
     int n,i,j;
@@ -19,8 +19,8 @@
     {
         printf("%d  ",a[i]);
     }
-}*/
-/*void main()
+}
+void main()
 {
 	int a,b,c;
 	scanf("%d",&a);
@@ -56,8 +56,8 @@
 			printf("%d %d %d",b,c,a);
 		}
 	}
-}*/
-/*void main()
+}
+void main()
 {
     int i,n,j;
     int q=0;
@@ -78,5 +78,5 @@
     }
     printf("%d",q);
 }
-*/
+
 
