@@ -1,82 +1,96 @@
+// Example program
 #include <stdio.h>
 #include <stdlib.h>
 
-void main()
+#define maxsize 1000
+
+typedef float datatype;
+
+typedef struct 
 {
-    int a[100];
-    int n,i,j;
-    scanf("%d",&n);
-    scanf("%d",&j);
-    for(i=0;i<n;i++)
-    {
-        scanf("%d",&a[i]);
-    }
-    for(i=j-1;i<n;i++)
-    {
-        a[i]=a[i+1];
-    }
-     for(i=0;i<n-1;i++)
-    {
-        printf("%d  ",a[i]);
-    }
-}
-void main()
+    datatype data[maxsize];
+    int last;
+}SeqList;
+
+SeqList *init_seqlist()
 {
-	int a,b,c;
-	scanf("%d",&a);
-	scanf("%d",&b);
-	scanf("%d",&c);
-	if(a>b)
-	{
-		if(c>a)
-		{
-			printf("%d %d %d",c,a,b);
-		}
-		else if(c<a&&c>b)
-		{
-			printf("%d %d %d",a,c,b);
-		}
-		else if(c<b)
-		{
-			printf("%d %d %d",a,b,c);
-		}
-	}
-	if(a<b)
-	{
-		if(c>b)
-		{
-			printf("%d %d %d",c,b,a);
-		}
-		else if(c<a)
-		{
-			printf("%d %d %d",b,a,c);
-		}
-		else if(c<b&&c>a)
-		{
-			printf("%d %d %d",b,c,a);
-		}
-	}
-}
-void main()
-{
-    int i,n,j;
-    int q=0;
-    int a[100];
-    int x;
-    int p=1;
-    scanf("%d",&x);
-    scanf("%d",&n);
-    for(i=0;i<n;i++)
-    {
-        scanf("%d",&a[i]);
-    }
-    for(j=0;j<n;j++)
-    {
-        p=p*a[j]*x;
-        q+=p;
-        p/=a[j];
-    }
-    printf("%d",q);
+    SeqList *L;
+    L = (SeqList*)malloc(sizeof(SeqList));
+    L->last = -1;
+    return L;
 }
 
+int insert_seqlist(SeqList *L, int i, datatype e)
+{
+    int j;
+    
+    if (L->last == maxsize - 1)
+    {
+        printf("list is already full\n");
+        return -1;
+    }
+    
+    if (i<1 || i>L->last+2 )
+    {
+        printf("wrong position\n");
+        return -1;
+    }
+    
+    for (j=L->last; j>=i-1; --j)
+    {
+        L->data[j+1] = L->data[j];    
+    }
+    
+    L->data[i-1] = e;
+    L->last++;
+    
+    return 1;
+}
 
+void print_seqlist(SeqList *L)
+{
+    int i;
+    for (i=1; i<L->last; ++i)
+    {
+        printf("%f -> ", L->data[i-1]);
+    }
+    printf("%f\n", L->data[L->last]);
+}
+
+int ListDelete(SeqList *L, int i)
+{
+    int j;
+    if((i < 1)||( i > L -> last))
+    {
+        return 0;  
+    }
+    for(j = i; j <= L -> last; j++)
+    {
+        L ->data[j - 1] = L ->data[j];
+    }
+    --L ->last;
+    return 1;
+}
+    
+int main()
+{
+    int i = 0;
+    
+    SeqList* L = init_seqlist();
+    if(L == NULL)
+    {
+        return 0;
+    }
+    for (i=0; i<10; ++i)
+    {
+        insert_seqlist(L, i+1, i*i);
+    }
+    printf("list len = %d\n", L->last+1); 
+    
+    print_seqlist(L);
+  
+    ListDelete(L, 5);
+    print_seqlist(L);
+
+    return 1;
+}
